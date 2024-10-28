@@ -1,3 +1,5 @@
+import math
+
 import data
 
 # Write your functions for each part in the space below.
@@ -34,6 +36,7 @@ class Time:
 """
 did i have to do all of the above?
 it didnt say to but in the tasks before we did, but i think it would work the same without
+
 """
 # Add two Time objects and return a new Time object representing their sum.
 # input: time1 (a Time object to add)
@@ -72,6 +75,65 @@ def is_descending(nums: list[float]) -> bool:
     return True
 
 # Part 5
+from typing import List, Optional
+# Find the index of the largest value in a list between two specified indexes.
+# input: numbers (a list of integers to examine)
+# input: lower (starting index of the range to search, inclusive)
+# input: upper (ending index of the range to search, inclusive)
+# output: integer (index of the largest value within the range), or None if the range is invalid or out of bounds
+def largest_between(nums: List[int], lower: int, upper: int) -> Optional[int]:
+    #checks if the range is invalid
+    if lower > upper:
+        return None
 
+    # adjust bounds if out of range
+    lower = max(0, lower)
+    upper = min(len(nums) - 1, upper)
+
+    # range still empty
+    if lower > upper:
+        return None
+
+    #initialize the largest value and its index
+    max_index = lower
+    max_value = nums[lower]
+
+    #loop through range to find max / its index
+    for i in range(lower, upper +1):
+        if nums[i] > max_value:
+            max_value = nums[i]
+            max_index = i
+    return max_index
 
 # Part 6
+class Point:
+    # Initialize a new Point object.
+    # input: x-coordinate as a float
+    # input: y-coordinate as a float
+    def __init__(self, x: float, y: float):
+        self.x = x
+        self.y = y
+
+# Function to find the index of the point furthest from the origin in a list of Points.
+# input: points (a list of Point objects)
+# output: integer (index of the point furthest from origin), or None if list is empty
+def furthest_from_origin(points: List[Point]) -> Optional[int]:
+    #checks if empty
+    if not points:
+        return None
+
+    max_distance = 0 #track  maximum distance
+    max_index = 0 #track index of furthest point
+    i = 0 # track the index in the list
+
+    while i < len(points):
+        #distance from the origin using the Euclidean distance formula
+        distance = math.sqrt(points[i].x ** 2 + points[i].y ** 2)
+
+        # Update max_distance and max_index if the current point's distance is greater
+        if distance > max_distance:
+            max_distance = distance
+            max_index = i
+        i += 1 # Move to the next index
+
+    return max_index
